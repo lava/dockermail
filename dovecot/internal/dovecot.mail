@@ -1,0 +1,19 @@
+mail_location = maildir:/srv/vmail/%d/%n:LAYOUT=fs
+
+namespace inbox {
+  inbox = yes
+
+  # set these to autocreate or else thunderbird will complain
+  mailbox Trash {
+    auto = create
+    special_use = \Trash
+  }
+  mailbox Drafts {
+    auto = subscribe
+    special_use = \Drafts
+  }
+  mailbox Sent {
+    auto = subscribe # autocreate and autosubscribe the Sent mailbox
+    special_use = \Sent
+  }
+  }

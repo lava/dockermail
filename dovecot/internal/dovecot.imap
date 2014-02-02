@@ -1,0 +1,3 @@
+protocol imap {
+	imap_client_workarounds = tb-extra-mailbox-sep
+}

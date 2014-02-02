@@ -1,0 +1,34 @@
+service imap-login {
+	inet_listener imap {
+
+	}
+
+	#disable imaps since we use TLS connections through the standard imap
+	inet_listener imaps {
+		port = 0
+	}
+}
+
+service imap {
+
+}
+
+# not sure if this is needed
+service lmtp {
+ unix_listener /var/spool/postfix/private/dovecot-lmtp {
+   group = vmail
+   mode = 0660
+   user = postfix
+  }
+}
+
+service auth {
+	unix_listener /var/spool/postfix/private/auth {
+      		mode = 0660
+		user = postfix
+		group = vmail
+	}
+}
+
+service auth-worker {
+}
