@@ -19,7 +19,7 @@ Setup
     example.org
     example.net
 
-2) Add user aliases to file aliases, like
+2) Add user aliases to the file 'aliases', like
 
     johndoe@example.org	john.doe@example.org
     john.doe@example.org	john.doe@example.org
@@ -29,7 +29,7 @@ Setup
 Only use simple adresses of the form <name>@<domain> on the right hand side.
 A virtual mail account is created for each entry on the right hand side.
 
-3) Add user passwords to file passwords like this
+3) Add user passwords to the file 'passwords' like this
 
     john.doe@example.org:{PLAIN}password123
     admin@example.org:{SHA256-CRYPT}$5$ojXGqoxOAygN91er$VQD/8dDyCYOaLl2yLJlRFXgl.NSrB3seZGXBRMdZAr6

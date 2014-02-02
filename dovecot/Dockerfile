@@ -59,5 +59,5 @@ EXPOSE 25
 EXPOSE 143
 
 # start necessary services for operation (dovecot -F starts dovecot in the foreground to prevent container exit)
-ENTRYPOINT service rsyslog start; service postfix start; dovecot -F
+ENTRYPOINT chown -R vmail:vmail /srv/vmail; service rsyslog start; service postfix start; dovecot -F
 
