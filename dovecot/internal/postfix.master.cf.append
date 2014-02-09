@@ -1,2 +1,0 @@
-dovecot   unix  -       n       n       -       -       pipe
-  flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}

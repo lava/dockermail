@@ -37,26 +37,25 @@ mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 mailbox_size_limit = 0
 recipient_delimiter = +
 
-# Allow connections from trusted networks only.
-# smtpd_client_restrictions = permit_mynetworks, permit_sasl_authenticated, reject
+# SMTP configuration for incoming mail (port 25)
+# Outgoing mail (port 587) configuration  is specified in master.cf
 
 # allow all connections (since we want to receive mail from outside)
 smtpd_client_restrictions = permit
 
 # Don't talk to mail systems that don't know their own hostname.
 # With Postfix < 2.3, specify reject_unknown_hostname.
-smtpd_helo_restrictions = reject_unknown_helo_hostname
+smtpd_helo_restrictions = reject_unknown_helo_hostname, permit
 
 # Don't accept mail from domains that don't exist.
-smtpd_sender_restrictions = reject_unknown_sender_domain
+smtpd_sender_restrictions = reject_unknown_sender_domain, permit
 
-# Relay control (Postfix 2.10 and later): local clients and
-# authenticated clients may specify any destination domain.
-smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+# Only accept mail where this server is the final destination
+smtpd_relay_restrictions = permit_auth_destination, reject
 
-# Spam control: exclude local clients and authenticated clients
-# from DNSBL lookups.
-smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_rbl_client zen.spamhaus.org, reject_rhsbl_helo dbl.spamhaus.org, reject_rhsbl_sender dbl.spamhaus.org
+# Mail thats not for us gets filtered out by smtpd_relay_restrictions
+# When the mail is for us, we just accept everything. (could add spam blocklists/user checking etc. here)
+smtpd_recipient_restrictions = permit
 
 # Delivery to dovecot
 alias_maps = hash:/etc/aliases
