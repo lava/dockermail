@@ -3,7 +3,8 @@ dockermail
 
 A mail server in a box.
 
-A secure, minimal-configuration mail server in a docker container. 
+A secure, minimal-configuration mail server in a docker container, including
+an automaticlly configured webmail frontend. 
 
 This container uses postfix as MTA and dovecot as IMAP server. Only TLS/SSL-encrypted
 connections are accepted. In theory it works with all mail clients, but
@@ -44,8 +45,8 @@ container and run `doveadm pw -s <scheme-name>` inside.
 
     make
 
-You can build single targets with `make dovecot`, `make rainloop`, etc. The Makefile is
-extremely simple, so you can just look inside for more information.
+You can build single targets, so if you dont want the webmail you can just run `make dovecot` instead. The Makefile is
+extremely simple, so you can just look inside for more information
 
 6) Run container and map ports 25 and 143 from the host to the container.
    To store your mail outside the container, map `/srv/vmail/` to
@@ -56,15 +57,16 @@ extremely simple, so you can just look inside for more information.
     make run-all
 
    Again, you can make `run-dovecot` or `run-rainloop` to only start specific containers. Look 
-   at the Makefile to see what this does exactly.
+   at the Makefile to see what this does exactly. Note that you have to stop old containers
+   manually before invoking make, as this currently cannot be done automatically.
 
 7) Enjoy. The webmail frontend lives in a container called rainloop and is reachable at `localhost:33100`. 
    To access this from the web, you can either point a reverse proxy on the host to this adress or change the 
    `docker run` command to connect this directly to the hosts port 80.
 
 Note that there is a webmail admin interface available at `localhost:33100/?admin with
-username 'admin' and password '12345', so  *DONT CONNECT THE RAINLOOP CONTAINER TO THE INTERNET
-UNTIL YOU HAVE CHANGED THIS*. Also note that the admin account will *RESET EVERY TIME YOU RESTART THE RAINLOOP CONTAINER*. 
+username 'admin' and password '12345', so  **DONT CONNECT THE RAINLOOP CONTAINER TO THE INTERNET
+UNTIL YOU HAVE CHANGED THIS**. Also note that the admin account will **RESET EVERY TIME YOU RESTART THE RAINLOOP CONTAINER**. 
 
 Considering that rainloop is a php application, you might not
 want to expose it directly to the internet at all. Then again, even if an attacker can
