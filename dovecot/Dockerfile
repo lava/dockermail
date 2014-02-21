@@ -1,4 +1,4 @@
-FROM ubuntu:13.10
+FROM mail-base
 
 # prerequisites
 RUN apt-get update
@@ -14,13 +14,16 @@ RUN apt-get install -y --force-yes dovecot-imapd
 
 # postfix configuration
 RUN echo "mail.docker.container" > /etc/mailname
-ADD ./internal/postfix.main.cf /etc/postfix/main.cf
-ADD ./internal/postfix.master.cf.append /etc/postfix/master-additional.cf
+ADD ./postfix.main.cf /etc/postfix/main.cf
+ADD ./postfix.master.cf.append /etc/postfix/master-additional.cf
 RUN cat /etc/postfix/master-additional.cf >> /etc/postfix/master.cf
 
 # configure mail delivery to dovecot
-ADD ./aliases /etc/postfix/virtual
-ADD ./domains /etc/postfix/virtual-mailbox-domains
+#ADD ./aliases /etc/postfix/virtual
+#ADD ./domains /etc/postfix/virtual-mailbox-domains
+RUN cp /aliases /etc/postfix/virtual
+RUN cp /domains /etc/postfix/virtual-mailbox-domains
+
 # todo: this could probably be done in one line
 RUN mkdir /etc/postfix/tmp; awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers
 RUN sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders
@@ -40,17 +43,17 @@ RUN chown -R vmail:vmail /srv/vmail
 RUN chmod u+w /srv/vmail
 
 # dovecot configuration
-ADD ./internal/dovecot.mail /etc/dovecot/conf.d/10-mail.conf
-ADD ./internal/dovecot.ssl /etc/dovecot/conf.d/10-ssl.conf
-ADD ./internal/dovecot.auth /etc/dovecot/conf.d/10-auth.conf
-ADD ./internal/dovecot.master /etc/dovecot/conf.d/10-master.conf
-ADD ./internal/dovecot.lda /etc/dovecot/conf.d/15-lda.conf
-ADD ./internal/dovecot.imap /etc/dovecot/conf.d/20-imap.conf
+ADD ./dovecot.mail /etc/dovecot/conf.d/10-mail.conf
+ADD ./dovecot.ssl /etc/dovecot/conf.d/10-ssl.conf
+ADD ./dovecot.auth /etc/dovecot/conf.d/10-auth.conf
+ADD ./dovecot.master /etc/dovecot/conf.d/10-master.conf
+ADD ./dovecot.lda /etc/dovecot/conf.d/15-lda.conf
+ADD ./dovecot.imap /etc/dovecot/conf.d/20-imap.conf
 # add verbose logging
 #ADD ./internal/dovecot.logging /etc/dovecot/conf.d/10-logging.conf
 
 # Add password file
-ADD ./passwords /etc/dovecot/passwd
+RUN cp /passwords /etc/dovecot/passwd
 
 # i'm not sure what expose actually does, so its mainly here for documentation
 # smtp port for incoming mail
