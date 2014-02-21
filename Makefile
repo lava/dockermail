@@ -6,7 +6,7 @@ mail-base:
 	cd mail-base; docker build -t mail-base .
 
 dovecot: mail-base
-	cd dovecot; docker build -t dovector:2.1.7 .
+	cd dovecot; docker build -t dovecot:2.1.7 .
 
 rainloop: mail-base
 	cd rainloop; docker build -t rainloop:1.6.1 .
