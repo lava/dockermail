@@ -1,14 +1,14 @@
-all: base dovecot rainloop
+all: mail-base dovecot rainloop
 
-.PHONY: base dovecot rainloop run-dovecot run-rainloop
+.PHONY: mail-base dovecot rainloop run-dovecot run-rainloop
 
-base: 
+mail-base: 
 	cd mail-base; docker build -t mail-base .
 
-dovecot: 
+dovecot: mail-base
 	cd dovecot; docker build -t dovector:2.1.7 .
 
-rainloop:
+rainloop: mail-base
 	cd rainloop; docker build -t rainloop:1.6.1 .
 
 run-dovecot:
