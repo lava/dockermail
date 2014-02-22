@@ -47,7 +47,7 @@ Setup
 
 An IMAP mail account is created for each entry on the right hand side.
 Every mail sent to one of the addresses in the left column will
-be delivered to the corresponding account in the right column.
+be delivered to the corresponding account in the right column. 
 
 3) Add user passwords to the file `mail-base/passwords` like this
 
