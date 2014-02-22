@@ -8,21 +8,24 @@ A secure, minimal-configuration mail server in a docker container, including web
 This repository is tailored to small private servers, where you own some domain(s) and
 want to receive the mail for and send mail from this domain. It consists of 4 separate docker containers:
 
-  - **dovecot**:  The SMTP and IMAP server. This container uses postfix as MTA and dovecot as IMAP server.
-    All incoming mail to your own domains is acceptet. For outgoing mail, only authenticated (logged in with username and password)
+ - **dovecot**:  The SMTP and IMAP server. This container uses postfix as MTA and dovecot as IMAP server.
+    All incoming mail to your own domains is accepted. For outgoing mail, only authenticated (logged in with username and password)
     clients can send messages via STARTTLS on port 587. In theory it works with all mail clients, but it was only tested with Thunderbird.
 
-  - **rainloop**: An automatically configured webmail interface. Note that you have to login with your full mail adress, 
-    e.g. `john.doe@example.org` instead of just `john.doe`. By default, this will bind to `localhost:33100`.
-    Also note that there is a webmail admin interface available at `localhost:33100/?admin with
-    default username 'admin' and default password '12345', so  *DONT CONNECT THIS CONTAINER TO THE INTERNET
-    UNTIL YOU HAVE CHANGED IT!*. Also note that the admin account will *reset to the default value every time you restart the container*.
-    Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes.
+ - **rainloop**: An automatically configured webmail interface. Note that you have to login with your full mail adress, 
+   e.g. `john.doe@example.org` instead of just `john.doe`. By default, this will bind to `localhost:33100`.
 
-  - **mailpile**: An early-alpha but promising webmail interface. It is currently not recommended to use this in production
-    and it is not built by default, but you can play around with it if you like.
+   There is a webmail admin interface available at `localhost:33100/?admin` with
+   default username `admin` and default password `12345`, so  *DONT CONNECT THIS CONTAINER TO THE INTERNET
+   UNTIL YOU HAVE CHANGED IT!*. Also note that the admin password (and all other settings) 
+   will reset to the default values every time you restart the container.
+    
+   Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes.
 
-  - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
+ - **mailpile**: An early-alpha but promising webmail interface. It is currently not recommended to use this in production
+   and it is not built by default, but you can play around with it if you like.
+
+ - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
 
 
 
