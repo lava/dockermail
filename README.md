@@ -3,15 +3,28 @@ dockermail
 
 A mail server in a box.
 
-A secure, minimal-configuration mail server in a docker container, including
-an automaticlly configured webmail frontend. 
+A secure, minimal-configuration mail server in a docker container, including webmail.
 
-This container uses postfix as MTA and dovecot as IMAP server. Only TLS/SSL-encrypted
-connections are accepted. In theory it works with all mail clients, but
-it was only tested with Thunderbird.
+This repository is tailored to small private servers, where you own some domain(s) and
+want to receive the mail for and send mail from this domain. It consists of 4 separate docker containers:
 
-This is tailored to small private servers, where you own some domain(s) and
-just want to receive the mail for and send mail from this domain. 
+  - **dovecot**:  The SMTP and IMAP server. This container uses postfix as MTA and dovecot as IMAP server.
+    All incoming mail to your own domains is acceptet. For outgoing mail, only authenticated (logged in with username and password)
+    clients can send messages via STARTTLS on port 587. In theory it works with all mail clients, but it was only tested with Thunderbird.
+
+  - **rainloop**: An automatically configured webmail interface. Note that you have to login with your full mail adress, 
+    e.g. `john.doe@example.org` instead of just `john.doe`. By default, this will bind to `localhost:33100`.
+    Also note that there is a webmail admin interface available at `localhost:33100/?admin with
+    default username 'admin' and default password '12345', so  *DONT CONNECT THIS CONTAINER TO THE INTERNET
+    UNTIL YOU HAVE CHANGED IT!*. Also note that the admin account will *reset to the default value every time you restart the container*.
+    Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes.
+
+  - **mailpile**: An early-alpha but promising webmail interface. It is currently not recommended to use this in production
+    and it is not built by default, but you can play around with it if you like.
+
+  - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
+
+
 
 Setup
 =====
@@ -46,7 +59,7 @@ container and run `doveadm pw -s <scheme-name>` inside.
     make
 
 You can build single targets, so if you dont want the webmail you can just run `make dovecot` instead. The Makefile is
-extremely simple, so you can just look inside for more information
+extremely simple, dont be afraid to look inside.
 
 6) Run container and map ports 25 and 143 from the host to the container.
    To store your mail outside the container, map `/srv/vmail/` to
@@ -60,17 +73,7 @@ extremely simple, so you can just look inside for more information
    at the Makefile to see what this does exactly. Note that you have to stop old containers
    manually before invoking make, as this currently cannot be done automatically.
 
-7) Enjoy. The webmail frontend lives in a container called rainloop and is reachable at `localhost:33100`. 
-   To access this from the web, you can either point a reverse proxy on the host to this adress or change the 
-   `docker run` command to connect this directly to the hosts port 80.
-
-Note that there is a webmail admin interface available at `localhost:33100/?admin with
-username 'admin' and password '12345', so  **DONT CONNECT THE RAINLOOP CONTAINER TO THE INTERNET
-UNTIL YOU HAVE CHANGED THIS**. Also note that the admin account will **RESET EVERY TIME YOU RESTART THE RAINLOOP CONTAINER**. 
-
-Considering that rainloop is a php application, you might not
-want to expose it directly to the internet at all. Then again, even if an attacker can
-exploit rainloop, its still not easy to escape from the docker container.
+7) Enjoy.
 
 
 Known issues / Todo
