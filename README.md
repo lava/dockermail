@@ -81,6 +81,8 @@ extremely simple, dont be afraid to look inside.
 
 Known issues / Todo
 ===================
+- HELO isn't set correctly, which can lead to problems with outgoing mail on some servers
+
 - It would be nice to have a way of catching mail to all subdomains.
 
 - Changing any configuration requires rebuilding the image and restarting the container

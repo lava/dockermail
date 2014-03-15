@@ -45,10 +45,10 @@ smtpd_client_restrictions = permit
 
 # Don't talk to mail systems that don't know their own hostname.
 # With Postfix < 2.3, specify reject_unknown_hostname.
-smtpd_helo_restrictions = reject_unknown_helo_hostname, permit
+smtpd_helo_restrictions = permit
 
 # Don't accept mail from domains that don't exist.
-smtpd_sender_restrictions = reject_unknown_sender_domain, permit
+smtpd_sender_restrictions = permit
 
 # Only accept mail where this server is the final destination
 smtpd_relay_restrictions = permit_auth_destination, reject
