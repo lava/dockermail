@@ -12,10 +12,9 @@ RUN gem install therubyracer less
 # mailpile is alpha/unstable anyways, so just get the latest master instead of a fixed version
 RUN git clone -b master --depth=1 https://github.com/pagekite/Mailpile.git /etc/mailpile
 
-RUN cd /etc/mailpile; ./mp --setup; ./mp --set sys.http_host=0.0.0.0
+RUN /etc/mailpile/mp setup
 
-ENTRYPOINT /etc/mailpile/mp --www
-
+ENTRYPOINT /etc/mailpile/mp --www=0.0.0.0:33411 --wait
 
 # installation instructions at
 # https://github.com/pagekite/Mailpile/wiki/Getting-started
