@@ -43,14 +43,14 @@ Setup
 
 2) Add user aliases to the file `mail-base/aliases`, like
 
-    johndoe@example.org	john.doe@example.org
-    john.doe@example.org	john.doe@example.org
-    admin@forum.example.org	forum-admin@example.org
-    @example.net	catch-all@example.net
+    johndoe@example.org	        john.doe@example.org
+    john.doe@example.org        john.doe@example.org
+    admin@forum.example.org     forum-admin@example.org
+    @example.net	        catch-all@example.net
 
 An IMAP mail account is created for each entry on the right hand side.
 Every mail sent to one of the addresses in the left column will
-be delivered to the corresponding account in the right column. 
+be delivered to the corresponding account in the right column.
 
 3) Add user passwords to the file `mail-base/passwords` like this
 
