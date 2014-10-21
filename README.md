@@ -16,14 +16,17 @@ want to receive the mail for and send mail from this domain. It consists of 4 se
    e.g. `john.doe@example.org` instead of just `john.doe`. By default, this will bind to `localhost:33100`.
 
    There is a webmail admin interface available at `localhost:33100/?admin` with
-   default username `admin` and default password `12345`, so  *DONT CONNECT THIS CONTAINER TO THE INTERNET
-   UNTIL YOU HAVE CHANGED IT!*. Also note that the admin password (and all other settings) 
-   will reset to the default values every time you restart the container.
+   default username `admin` and default password `12345`, so you probably want to change that before connecting this container to
+   the internet. Note that just knowing the admin password isnt enough for other people to read your mail, since the mail password
+   isn't stored within rainloop. Also note that the admin 
+   password will reset to the default values every time you restart the container.
     
-   Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes.
+   Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes. They do
+   sell commercial licenses, if required.
 
  - **mailpile**: An early-alpha but promising webmail interface. It is currently not recommended to use this in production
-   and it is not built by default, but you can play around with it if you like.
+   and it is not built by default, but you can play around with it if you like. By default, the web interface will bind to
+   `localhost:33411`
 
  - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
 
@@ -79,10 +82,14 @@ extremely simple, dont be afraid to look inside.
 7) Enjoy.
 
 
-Known issues / Todo
-===================
+Known issues / Todo / Wishlist
+==============================
 - HELO isn't set correctly, which can lead to problems with outgoing mail on some servers
 
 - It would be nice to have a way of catching mail to all subdomains.
 
 - Changing any configuration requires rebuilding the image and restarting the container
+
+- The Makefile currently cannot stop/replace old containers automatically
+
+Patches welcome!
