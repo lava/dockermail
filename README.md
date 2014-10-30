@@ -28,6 +28,17 @@ want to receive the mail for and send mail from this domain. It consists of 4 se
    and it is not built by default, but you can play around with it if you like. By default, the web interface will bind to
    `localhost:33411`
 
+ - **owncloud**: This provides CalDAV and CardDAV functionality, together with tons and tons of other stuff like cloud storage,
+   collaborative editing, etc. It is automatically set up such that you can login using your mail address. 
+
+   By default, this container will bind to `localhost:33200`.
+   All user data is by default mapped `/srv/owncloud` on the host.
+   As above, the default admin account has username `admin` and password `12345`, so make sure to change this before connecting the container to the internet.
+   
+   It is also possible to install a webmail interface within owncloud. That said, restarting the container after configuration changes
+   can be a bit rough and might requrie manual intervention, so if you want *just* webmail rainloop is probably preferrable.
+   If you encounter problems, try deleting `/srv/owncloud/owncloud.db` and restarting the container.
+
  - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
 
 
@@ -79,7 +90,9 @@ extremely simple, dont be afraid to look inside.
    at the Makefile to see what this does exactly. Note that you have to stop old containers
    manually before invoking make, as this currently cannot be done automatically.
 
-7) Enjoy.
+7) (Optional) If you want to use owncloud, enter the public url at which owncloud can be reached (e.g. `owncloud.example.org`) into the file `owncloud/public_url`.
+
+8) Enjoy.
 
 
 Known issues / Todo / Wishlist
