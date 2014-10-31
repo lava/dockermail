@@ -24,22 +24,23 @@ want to receive the mail for and send mail from this domain. It consists of 4 se
    Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes. They do
    sell commercial licenses, if required.
 
- - **mailpile**: An early-alpha but promising webmail interface. It is currently not recommended to use this in production
-   and it is not built by default, but you can play around with it if you like. By default, the web interface will bind to
-   `localhost:33411`
-
  - **owncloud**: This provides CalDAV and CardDAV functionality, together with tons and tons of other stuff like cloud storage,
-   collaborative editing, etc. It is automatically set up such that you can login using your mail address. 
+   collaborative editing, etc. You should be able to login using your mail address automatically.
 
    By default, this container will bind to `localhost:33200`.
    All user data is by default mapped `/srv/owncloud` on the host.
    As above, the default admin account has username `admin` and password `12345`, so make sure to change this before connecting the container to the internet.
    
-   It is also possible to install a webmail interface within owncloud. That said, restarting the container after configuration changes
-   can be a bit rough and might requrie manual intervention, so if you want *just* webmail rainloop is probably preferrable.
+   It is also possible to install a webmail interface within owncloud, so in theory you don't need rainloop.
+   That said, restarting the container after configuration changes
+   can be a bit rough and might require manual intervention so if you *just* want webmail, rainloop is probably preferrable.
    If you encounter problems, try deleting `/srv/owncloud/owncloud.db` and restarting the container.
 
- - **mail-base**: This image is just a workaround to allow sharing of configuration files between multiple docker images. 
+ - **mailpile**: An early-alpha but promising webmail interface. It is currently not built by default, 
+   but you can play around with it if you like. By default, the web interface will bind to `localhost:33411`
+
+
+ - **mail-base**: This image is just an implementation detail. It is a workaround to allow sharing of configuration files between multiple docker images. 
 
 
 
