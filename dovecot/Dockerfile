@@ -29,9 +29,6 @@ RUN mkdir /etc/postfix/tmp; awk < /etc/postfix/virtual '{ print $2 }' > /etc/pos
 RUN sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders
 RUN paste /etc/postfix/tmp/virtual-receivers /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps
 
-# give postfix the ownership of his files
-RUN chown -R postfix:postfix /etc/postfix
-
 # map virtual aliases and user/filesystem mappings
 RUN postmap /etc/postfix/virtual
 RUN postmap /etc/postfix/virtual-mailbox-maps
