@@ -9,6 +9,9 @@ RUN apt-get install -y --force-yes ssl-cert
 # Install postfix as MTA
 RUN apt-get install -y --force-yes postfix
 
+# Install postgrey for greylisting
+RUN apt-get install -y --force-yes postgrey
+
 # Install dovecot as IMAP server
 RUN apt-get install -y --force-yes dovecot-imapd
 
