@@ -67,5 +67,5 @@ EXPOSE 587
 # http://www.synology-wiki.de/index.php/Zusaetzliche_Ports_fuer_Postfix
 
 # start necessary services for operation (dovecot -F starts dovecot in the foreground to prevent container exit)
-ENTRYPOINT chown -R vmail:vmail /srv/vmail; service rsyslog start; service postgrey start;service postfix start; dovecot -F
+ENTRYPOINT chown -R vmail:vmail /srv/vmail; service rsyslog start; service postgrey start; service postfix start; dovecot -F
 
