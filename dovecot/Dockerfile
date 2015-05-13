@@ -9,6 +9,9 @@ RUN apt-get install -y --force-yes ssl-cert
 # Install postfix as MTA
 RUN apt-get install -y --force-yes postfix
 
+# Install postgrey for greylisting
+RUN apt-get install -y --force-yes postgrey
+
 # Install dovecot as IMAP server
 RUN apt-get install -y --force-yes dovecot-imapd
 
@@ -64,5 +67,5 @@ EXPOSE 587
 # http://www.synology-wiki.de/index.php/Zusaetzliche_Ports_fuer_Postfix
 
 # start necessary services for operation (dovecot -F starts dovecot in the foreground to prevent container exit)
-ENTRYPOINT chown -R vmail:vmail /srv/vmail; service rsyslog start; service postfix start; dovecot -F
+ENTRYPOINT chown -R vmail:vmail /srv/vmail; service rsyslog start; service postgrey start; service postfix start; dovecot -F
 

@@ -41,7 +41,9 @@ recipient_delimiter = +
 # Outgoing mail (port 587) configuration  is specified in master.cf
 
 # allow all connections (since we want to receive mail from outside)
-smtpd_client_restrictions = permit
+smtpd_client_restrictions =
+        check_policy_service inet:127.0.0.1:10023
+        permit
 
 # Don't talk to mail systems that don't know their own hostname.
 # With Postfix < 2.3, specify reject_unknown_hostname.
