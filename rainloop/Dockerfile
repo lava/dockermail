@@ -2,7 +2,11 @@ FROM mail-base
 
 RUN apt-get install -y --force-yes git
 
-RUN git clone -b 1.6.9 --depth 1 https://github.com/RainLoop/rainloop-webmail.git /var/www
+RUN git clone https://github.com/RainLoop/rainloop-webmail.git /var/www
+
+# The rainloop project seems to have given up on versioning.
+# The following commit is master from March 2, 2016
+RUN cd /var/www && git checkout -b dockermail 5eb9bd311a5f3314daf97d8acc3b7b354996d26c
 
 RUN apt-get install -y --force-yes apache2 php5 libapache2-mod-php5 php5-curl php5-json
 
