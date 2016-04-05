@@ -6,8 +6,8 @@ RUN apt-get install -y --force-yes wget apache2 sqlite3 libapache2-mod-php5 \
     php5-gd php5-json php5-mysql php5-curl php5-sqlite php5-imap \
     php5-intl php5-mcrypt php5-imagick
 
-RUN wget https://download.owncloud.org/community/owncloud-8.0.2.tar.bz2
-RUN tar -xvf owncloud-8.0.2.tar.bz2 --directory /var/www/ #--strip-components=1
+RUN wget https://download.owncloud.org/community/owncloud-8.2.3.tar.bz2
+RUN tar -xvf owncloud-8.2.3.tar.bz2 --directory /var/www/ #--strip-components=1
 
 # Generate data directory etc.
 ADD ./create_config.sh /create_config.sh
