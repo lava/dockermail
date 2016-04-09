@@ -1,7 +1,7 @@
 DOVECOT_VERSION = dovecot:2.1.7
 RAINLOOP_VERSION = rainloop:1.9.4
 MAILPILE_VERSION = mailpile:latest
-OWNCLOUD_VERSION = owncloud:8.0.2
+OWNCLOUD_VERSION = owncloud:8.2.3
 
 all: mail-base dovecot rainloop owncloud
 
