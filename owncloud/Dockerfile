@@ -26,7 +26,7 @@ RUN php5 /var/www/owncloud/occ app:enable user_external
 RUN cp -pr /var/www/owncloud/data /owncloud_bootstrap
 
 ENTRYPOINT cp -npr /owncloud_bootstrap/. /var/www/owncloud/data \
-    && chown -R www-data:www-data /var/www/owncloud/data \
-    && a2enmod rewrite \
-    && php5enmod imap \
+    && chown -R www-data:www-data /var/www/owncloud/data        \
+    && a2enmod rewrite                                          \
+    && php5enmod imap                                           \
     && apachectl -DFOREGROUND

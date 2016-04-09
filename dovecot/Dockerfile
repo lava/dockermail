@@ -25,7 +25,8 @@ RUN cp /aliases /etc/postfix/virtual                     \
     && cp /domains /etc/postfix/virtual-mailbox-domains
 
 # todo: this could probably be done in one line
-RUN mkdir /etc/postfix/tmp; awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers                    \
+RUN mkdir /etc/postfix/tmp                                                                                                    \
+    && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers                                         \
     && sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders            \
     && paste /etc/postfix/tmp/virtual-receivers /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps
 
