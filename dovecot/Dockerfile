@@ -1,19 +1,16 @@
 FROM mail-base
 
 # prerequisites
-RUN apt-get update
-
-# install self-signed ssl certs
-RUN apt-get install -y --force-yes ssl-cert
-
-# Install postfix as MTA
-RUN apt-get install -y --force-yes postfix
-
-# Install postgrey for greylisting
-RUN apt-get install -y --force-yes postgrey
-
-# Install dovecot as IMAP server
-RUN apt-get install -y --force-yes dovecot-imapd
+RUN apt-get update                                  \
+    # install self-signed ssl certs
+    && apt-get install -y --force-yes ssl-cert      \
+    # Install postfix as MTA
+    postfix       \
+    # Install postgrey for greylisting
+    postgrey      \
+    # Install dovecot as IMAP server
+    dovecot-imapd \
+    && rm -rf /var/lib/apt/lists/*
 
 # postfix configuration
 RUN echo "mail.docker.container" > /etc/mailname
@@ -24,23 +21,24 @@ RUN cat /etc/postfix/master-additional.cf >> /etc/postfix/master.cf
 # configure mail delivery to dovecot
 #ADD ./aliases /etc/postfix/virtual
 #ADD ./domains /etc/postfix/virtual-mailbox-domains
-RUN cp /aliases /etc/postfix/virtual
-RUN cp /domains /etc/postfix/virtual-mailbox-domains
+RUN cp /aliases /etc/postfix/virtual                     \
+    && cp /domains /etc/postfix/virtual-mailbox-domains
 
 # todo: this could probably be done in one line
-RUN mkdir /etc/postfix/tmp; awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers
-RUN sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders
-RUN paste /etc/postfix/tmp/virtual-receivers /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps
+RUN mkdir /etc/postfix/tmp                                                                                                    \
+    && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers                                         \
+    && sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders            \
+    && paste /etc/postfix/tmp/virtual-receivers /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps
 
 # map virtual aliases and user/filesystem mappings
-RUN postmap /etc/postfix/virtual
-RUN postmap /etc/postfix/virtual-mailbox-maps
+RUN postmap /etc/postfix/virtual              \
+    && postmap /etc/postfix/virtual-mailbox-maps
 
 # add user vmail who own all mail folders
-RUN groupadd -g 5000 vmail
-RUN useradd -g vmail -u 5000 vmail -d /srv/vmail -m
-RUN chown -R vmail:vmail /srv/vmail
-RUN chmod u+w /srv/vmail
+RUN groupadd -g 5000 vmail                             \
+    && useradd -g vmail -u 5000 vmail -d /srv/vmail -m \
+    && chown -R vmail:vmail /srv/vmail                 \
+    && chmod u+w /srv/vmail
 
 # dovecot configuration
 ADD ./dovecot.mail /etc/dovecot/conf.d/10-mail.conf
@@ -57,7 +55,7 @@ RUN cp /passwords /etc/dovecot/passwd
 
 # i'm not sure what expose actually does, so its mainly here for documentation
 # smtp port for incoming mail
-EXPOSE 25 
+EXPOSE 25
 # imap port
 EXPOSE 143
 # smtp port for outgoing
