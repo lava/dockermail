@@ -53,12 +53,12 @@ Setup
     cp mail-base/domains.example mail-base/domains
     cp mail-base/passwords.example mail-base/passwords
 
-1) Add all domains you want to receive mail for to the file `mail-base/domains`, like this:
+2) Add all domains you want to receive mail for to the file `mail-base/domains`, like this:
 
     example.org
     example.net
 
-2) Add user aliases to the file `mail-base/aliases`, like
+3) Add user aliases to the file `mail-base/aliases`, like
 
     johndoe@example.org	        john.doe@example.org
     john.doe@example.org        john.doe@example.org
@@ -69,7 +69,7 @@ An IMAP mail account is created for each entry on the right hand side.
 Every mail sent to one of the addresses in the left column will
 be delivered to the corresponding account in the right column.
 
-3) Add user passwords to the file `mail-base/passwords` like this
+4) Add user passwords to the file `mail-base/passwords` like this
 
     john.doe@example.org:{PLAIN}password123
     admin@example.org:{SHA256-CRYPT}$5$ojXGqoxOAygN91er$VQD/8dDyCYOaLl2yLJlRFXgl.NSrB3seZGXBRMdZAr6
@@ -77,7 +77,7 @@ be delivered to the corresponding account in the right column.
 To get the hash values, you can either install dovecot locally or use lxc-attach to attach to the running
 container and run `doveadm pw -s <scheme-name>` inside.
 
-4) Build containers:
+5) Build containers:
 
     make
 
