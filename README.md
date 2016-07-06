@@ -23,6 +23,8 @@ want to receive the mail for and send mail from this domain. It consists of 4 se
 
    Rainloop is released under CC BY-NC-SA 3.0, so you are only allowed to use this container for non-commercial purposes. They do
    sell commercial licenses, if required.
+   
+   **NOTE** The build for this container is currently broken, because the rainloop project removed all version tags from their public git repository. If someone can identify a working commit and fix the Dockerfile to pull this specific request, a pull request would be much appreciated!
 
  - **owncloud**: This provides CalDAV and CardDAV functionality, together with tons and tons of other stuff like cloud storage,
    collaborative editing, etc. You should be able to login using your mail address automatically.
